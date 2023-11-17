@@ -1,5 +1,9 @@
-const { DBSequelize } = require("./sequelize");
+const {
+  DBSequelize,
+  sequelizeSessionStore,
+} = require("./sequelize");
 
 module.exports = {
   db: DBSequelize,
+  sessionStore: sequelizeSessionStore,
 };
