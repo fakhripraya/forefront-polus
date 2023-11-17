@@ -6,6 +6,12 @@ const {
   MASTER_CATEGORY_SEED,
 } = require("../seeds/master_category");
 const {
+  MasterTransaction,
+} = require("../models/activity/master_transaction");
+const {
+  MasterTransactionDetail,
+} = require("../models/activity/master_transaction_detail");
+const {
   MasterCourier,
 } = require("../models/objects/master_courier");
 const {
@@ -77,6 +83,7 @@ const MigrateModels = async () => {
 };
 
 module.exports = () => {
+  // initialize associations
   InitAssociations(
     MasterCategory,
     MasterFile,
@@ -87,8 +94,13 @@ module.exports = () => {
     MasterUser,
     MasterStoreDisplayItem
   );
+
+  // export the models here
   return {
     MigrateModels,
+    MasterTransaction,
+    MasterTransactionDetail,
+    MasterCourier,
     MasterCategory,
     MasterFile,
     MasterStoreCatalogue,
