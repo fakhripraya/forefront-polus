@@ -1,5 +1,6 @@
 require("dotenv").config();
-const { MigrateModels } = require("./src/models");
+const SequelizeModel = require("./src/models/index");
 
 // Init DB Models
+const { MigrateModels } = SequelizeModel();
 MigrateModels();
