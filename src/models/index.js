@@ -11,11 +11,32 @@ const {
 const {
   MasterCategory,
 } = require("../models/objects/master_category");
-const { SequelizeRollback } = require("../utils/functions");
-const { InitAssociations } = require("./associations");
+const {
+  MasterFile,
+} = require("../models/objects/master_file");
+const {
+  MasterStoreCatalogue,
+} = require("../models/objects/master_stores_catalogue");
+const {
+  MasterStoreChannels,
+} = require("../models/objects/master_stores_channels");
+const {
+  MasterStoreEmployees,
+} = require("../models/objects/master_stores_employees");
+const {
+  MasterStore,
+} = require("../models/objects/master_stores");
+const {
+  MasterUser,
+} = require("../models/user/master_user");
+const {
+  MasterStoreDisplayItem,
+} = require("../models/objects/master_stores_display_item");
 
-const InitModels = async () => {
-  InitAssociations();
+const { SequelizeRollback } = require("../utils/functions");
+const { InitAssociations } = require("../associations");
+
+const MigrateModels = async () => {
   await db
     .sync({ alter: true, force: false })
     .then(() => {
@@ -55,4 +76,26 @@ const InitModels = async () => {
     });
 };
 
-module.exports = { InitModels };
+module.exports = () => {
+  InitAssociations(
+    MasterCategory,
+    MasterFile,
+    MasterStoreCatalogue,
+    MasterStoreChannels,
+    MasterStoreEmployees,
+    MasterStore,
+    MasterUser,
+    MasterStoreDisplayItem
+  );
+  return {
+    MigrateModels,
+    MasterCategory,
+    MasterFile,
+    MasterStoreCatalogue,
+    MasterStoreChannels,
+    MasterStoreEmployees,
+    MasterStore,
+    MasterUser,
+    MasterStoreDisplayItem,
+  };
+};

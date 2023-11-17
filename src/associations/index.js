@@ -1,23 +1,13 @@
-const {
+const InitAssociations = (
   MasterCategory,
-} = require("../objects/master_category");
-const { MasterFile } = require("../objects/master_file");
-const {
+  MasterFile,
   MasterStoreCatalogue,
-} = require("../objects/master_stores_catalogue");
-const {
   MasterStoreChannels,
-} = require("../objects/master_stores_channels");
-const {
   MasterStoreEmployees,
-} = require("../objects/master_stores_employees");
-const { MasterStore } = require("../objects/master_stores");
-const { MasterUser } = require("../user/master_user");
-const {
-  MasterStoreDisplayItem,
-} = require("../objects/master_stores_display_item");
-
-const InitAssociations = () => {
+  MasterStore,
+  MasterUser,
+  MasterStoreDisplayItem
+) => {
   // MASTER_USER - MASTER_STORE //
   MasterStore.belongsTo(MasterUser, {
     foreignKey: {
