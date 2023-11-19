@@ -1,6 +1,12 @@
 const { DataTypes, UUIDV4 } = require("sequelize");
 const { db } = require("../../config");
-const { EMPLOYEE } = require("../../variables/general");
+const {
+  EMPLOYEE,
+  ACTIVE,
+} = require("../../variables/general");
+const {
+  DB_DEFAULT_COLUMN_STATUS,
+} = require("../../variables/enum");
 
 const MasterStoreEmployees = db.define(
   "MasterStoreEmployees",
@@ -19,8 +25,8 @@ const MasterStoreEmployees = db.define(
     },
     status: {
       allowNull: false,
-      unique: false,
-      type: DataTypes.STRING,
+      type: DataTypes.ENUM(DB_DEFAULT_COLUMN_STATUS),
+      defaultValue: ACTIVE,
     },
   },
   {

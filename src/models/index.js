@@ -6,11 +6,16 @@ const {
   MASTER_CATEGORY_SEED,
 } = require("../seeds/master_category");
 const {
+  MASTER_PAYMENT_METHOD_SEED,
+} = require("../seeds/master_payment_method");
+const { SequelizeRollback } = require("../utils/functions");
+const { InitAssociations } = require("../associations");
+const {
   MasterTransaction,
 } = require("../models/activity/master_transaction");
 const {
-  MasterTransactionDetail,
-} = require("../models/activity/master_transaction_detail");
+  MasterActivityReport,
+} = require("../models/activity/master_activity_report");
 const {
   MasterCourier,
 } = require("../models/objects/master_courier");
@@ -38,48 +43,54 @@ const {
 const {
   MasterStoreDisplayItem,
 } = require("../models/objects/master_stores_display_item");
-
-const { SequelizeRollback } = require("../utils/functions");
-const { InitAssociations } = require("../associations");
+const {
+  MasterUserBuyAddresses,
+} = require("./user/master_user_buy_addresses");
+const {
+  MasterTransactionDetail,
+} = require("./activity/master_transaction_detail");
+const {
+  MasterPaymentMethod,
+} = require("./objects/master_payment_method");
 
 const MigrateModels = async () => {
-  await db
-    .sync({ alter: true, force: false })
-    .then(() => {
-      console.log(
-        "All models has been synchronized successfully."
-      );
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-    .finally(async () => {
-      const trx = await db.transaction();
-      try {
-        await MasterCourier.bulkCreate(
-          MASTER_COURIER_SEED,
-          {
-            ignoreDuplicates: true,
-            transaction: trx,
-            lock: true,
-          }
-        );
+  try {
+    await db.sync({ alter: true, force: false });
 
-        await MasterCategory.bulkCreate(
-          MASTER_CATEGORY_SEED,
-          {
-            ignoreDuplicates: true,
-            transaction: trx,
-            lock: true,
-          }
-        );
+    const trx = await db.transaction();
 
-        trx.commit();
-        console.log("Model initialization completed");
-      } catch (e) {
-        await SequelizeRollback(trx, e);
-      }
-    });
+    await Promise.all([
+      MasterCourier.bulkCreate(MASTER_COURIER_SEED, {
+        ignoreDuplicates: true,
+        transaction: trx,
+        lock: true,
+      }),
+      MasterCategory.bulkCreate(MASTER_CATEGORY_SEED, {
+        ignoreDuplicates: true,
+        transaction: trx,
+        lock: true,
+      }),
+      MasterPaymentMethod.bulkCreate(
+        MASTER_PAYMENT_METHOD_SEED,
+        {
+          ignoreDuplicates: true,
+          transaction: trx,
+          lock: true,
+        }
+      ),
+    ]);
+
+    await trx.commit();
+    console.log("Model initialization completed");
+    console.log(
+      "All models have been synchronized successfully."
+    );
+    process.exit(0);
+  } catch (e) {
+    await SequelizeRollback(trx, e);
+    console.error(e);
+    process.exit(1);
+  }
 };
 
 module.exports = () => {
@@ -92,15 +103,18 @@ module.exports = () => {
     MasterStoreEmployees,
     MasterStore,
     MasterUser,
-    MasterStoreDisplayItem
+    MasterUserBuyAddresses,
+    MasterStoreDisplayItem,
+    MasterTransaction,
+    MasterTransactionDetail,
+    MasterActivityReport,
+    MasterCourier,
+    MasterPaymentMethod
   );
 
   // export the models here
   return {
     MigrateModels,
-    MasterTransaction,
-    MasterTransactionDetail,
-    MasterCourier,
     MasterCategory,
     MasterFile,
     MasterStoreCatalogue,
@@ -108,6 +122,12 @@ module.exports = () => {
     MasterStoreEmployees,
     MasterStore,
     MasterUser,
+    MasterUserBuyAddresses,
     MasterStoreDisplayItem,
+    MasterTransaction,
+    MasterTransactionDetail,
+    MasterActivityReport,
+    MasterCourier,
+    MasterPaymentMethod,
   };
 };

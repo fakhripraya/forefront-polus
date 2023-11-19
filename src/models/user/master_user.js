@@ -1,6 +1,9 @@
 const { DataTypes, UUIDV4 } = require("sequelize");
 const { db } = require("../../config");
-const { USER } = require("../../variables/general");
+const { USER, ACTIVE } = require("../../variables/general");
+const {
+  DB_DEFAULT_COLUMN_STATUS,
+} = require("../../variables/enum");
 
 const MasterUser = db.define(
   "MasterUser",
@@ -60,6 +63,11 @@ const MasterUser = db.define(
     salt: {
       allowNull: false,
       type: DataTypes.BLOB,
+    },
+    status: {
+      allowNull: false,
+      type: DataTypes.ENUM(DB_DEFAULT_COLUMN_STATUS),
+      defaultValue: ACTIVE,
     },
   },
   {

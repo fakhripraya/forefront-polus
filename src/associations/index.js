@@ -6,7 +6,13 @@ const InitAssociations = (
   MasterStoreEmployees,
   MasterStore,
   MasterUser,
-  MasterStoreDisplayItem
+  MasterUserBuyAddresses,
+  MasterStoreDisplayItem,
+  MasterTransaction,
+  MasterTransactionDetail,
+  MasterActivityReport,
+  MasterCourier,
+  MasterPaymentMethod
 ) => {
   // MASTER_USER - MASTER_STORE //
   MasterStore.belongsTo(MasterUser, {
@@ -164,6 +170,136 @@ const InitAssociations = (
   MasterStore.hasMany(MasterStoreChannels, {
     foreignKey: {
       name: "storeId",
+      allowNull: false,
+    },
+    sourceKey: "id",
+    constraints: false,
+  });
+
+  //TODO: BARU
+  // MASTER_USER - MASTER_USER_BUY_ADDRESSES //
+  MasterUserBuyAddresses.belongsTo(MasterUser, {
+    foreignKey: {
+      name: "userId",
+      allowNull: false,
+    },
+    targetKey: "id",
+    constraints: false,
+  });
+  MasterUser.hasMany(MasterUserBuyAddresses, {
+    foreignKey: {
+      name: "userId",
+      allowNull: false,
+    },
+    sourceKey: "id",
+    constraints: false,
+  });
+
+  // MASTER_TRANSACTION - MASTER_TRANSACTION_DETAIL //
+  MasterTransactionDetail.belongsTo(MasterTransaction, {
+    foreignKey: {
+      name: "trxId",
+      allowNull: false,
+    },
+    targetKey: "id",
+    constraints: false,
+  });
+  MasterTransaction.hasMany(MasterTransactionDetail, {
+    foreignKey: {
+      name: "trxId",
+      allowNull: false,
+    },
+    sourceKey: "id",
+    constraints: false,
+  });
+
+  // MASTER_TRANSACTION_DETAIL - MASTER_STORE_DISPLAY_ITEM //
+  MasterTransactionDetail.belongsTo(
+    MasterStoreDisplayItem,
+    {
+      foreignKey: {
+        name: "displayItemId",
+        allowNull: false,
+      },
+      targetKey: "id",
+      constraints: false,
+    }
+  );
+  MasterStoreDisplayItem.hasMany(MasterTransactionDetail, {
+    foreignKey: {
+      name: "displayItemId",
+      allowNull: false,
+    },
+    sourceKey: "id",
+    constraints: false,
+  });
+
+  // MASTER_ACTIVITY_REPORT - MASTER_TRANSACTION //
+  MasterActivityReport.belongsTo(MasterTransaction, {
+    foreignKey: {
+      name: "trxId",
+      allowNull: false,
+    },
+    targetKey: "id",
+    constraints: false,
+  });
+  MasterTransaction.hasOne(MasterActivityReport, {
+    foreignKey: {
+      name: "trxId",
+      allowNull: false,
+    },
+    sourceKey: "id",
+    constraints: false,
+  });
+
+  // MASTER_ACTIVITY_REPORT - MASTER_USER //
+  MasterActivityReport.belongsTo(MasterUser, {
+    foreignKey: {
+      name: "reporterId",
+      allowNull: false,
+    },
+    targetKey: "id",
+    constraints: false,
+  });
+  MasterUser.hasMany(MasterActivityReport, {
+    foreignKey: {
+      name: "reporterId",
+      allowNull: false,
+    },
+    sourceKey: "id",
+    constraints: false,
+  });
+
+  // MASTER_TRANSACTION_DETAIL - MASTER_COURIER //
+  MasterTransactionDetail.belongsTo(MasterCourier, {
+    foreignKey: {
+      name: "courierId",
+      allowNull: false,
+    },
+    targetKey: "id",
+    constraints: false,
+  });
+  MasterCourier.hasMany(MasterTransactionDetail, {
+    foreignKey: {
+      name: "courierId",
+      allowNull: false,
+    },
+    sourceKey: "id",
+    constraints: false,
+  });
+
+  // MASTER_TRANSACTION - MASTER_PAYMENT_METHOD //
+  MasterTransaction.belongsTo(MasterPaymentMethod, {
+    foreignKey: {
+      name: "paymentMethodId",
+      allowNull: false,
+    },
+    targetKey: "id",
+    constraints: false,
+  });
+  MasterPaymentMethod.hasMany(MasterTransaction, {
+    foreignKey: {
+      name: "paymentMethodId",
       allowNull: false,
     },
     sourceKey: "id",

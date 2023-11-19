@@ -1,6 +1,13 @@
 const { DataTypes, UUIDV4 } = require("sequelize");
 const { db } = require("../../config");
-const { USER, ADMIN } = require("../../variables/general");
+const {
+  USER,
+  ADMIN,
+  ACTIVE,
+} = require("../../variables/general");
+const {
+  DB_DEFAULT_COLUMN_STATUS,
+} = require("../../variables/enum");
 
 const MasterStoreChannels = db.define(
   "MasterStoreChannels",
@@ -31,8 +38,8 @@ const MasterStoreChannels = db.define(
     },
     status: {
       allowNull: false,
-      unique: false,
-      type: DataTypes.STRING,
+      type: DataTypes.ENUM(DB_DEFAULT_COLUMN_STATUS),
+      defaultValue: ACTIVE,
     },
   },
   {

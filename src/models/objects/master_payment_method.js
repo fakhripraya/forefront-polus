@@ -5,8 +5,8 @@ const {
 } = require("../../variables/enum");
 const { ACTIVE } = require("../../variables/general");
 
-const MasterCourier = db.define(
-  "MasterCourier",
+const MasterPaymentMethod = db.define(
+  "MasterPaymentMethod",
   {
     id: {
       primaryKey: true,
@@ -15,7 +15,7 @@ const MasterCourier = db.define(
       type: DataTypes.UUID,
       defaultValue: UUIDV4,
     },
-    courierName: {
+    paymentMethodName: {
       allowNull: false,
       type: DataTypes.STRING,
     },
@@ -26,11 +26,13 @@ const MasterCourier = db.define(
     },
   },
   {
-    indexes: [{ unique: true, fields: ["courierName"] }],
+    indexes: [
+      { unique: true, fields: ["paymentMethodName"] },
+    ],
     paranoid: true,
     deletedAt: "destroyTime",
-    tableName: "master_courier",
+    tableName: "master_payment_method",
   }
 );
 
-module.exports = { MasterCourier };
+module.exports = { MasterPaymentMethod };
