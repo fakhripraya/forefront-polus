@@ -23,19 +23,15 @@ const MasterUserBuyAddresses = db.define(
       allowNull: false,
       type: DataTypes.STRING,
     },
+    addressPhoneNumber: {
+      allowNull: false,
+      type: DataTypes.STRING,
+    },
     addressLatitude: {
       allowNull: true,
       type: DataTypes.STRING,
     },
     addressLongitude: {
-      allowNull: true,
-      type: DataTypes.STRING,
-    },
-    addressEmail: {
-      allowNull: true,
-      type: DataTypes.STRING,
-    },
-    addressPhoneNumber: {
       allowNull: true,
       type: DataTypes.STRING,
     },
