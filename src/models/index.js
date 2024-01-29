@@ -23,6 +23,9 @@ const {
   MasterCategory,
 } = require("../models/objects/master_category");
 const {
+  MasterUOM,
+} = require("../models/objects/master_uom");
+const {
   MasterFile,
 } = require("../models/objects/master_file");
 const {
@@ -52,6 +55,7 @@ const {
 const {
   MasterPaymentMethod,
 } = require("./objects/master_payment_method");
+const { MASTER_UOM } = require("../seeds/master_uom");
 
 const MigrateModels = async () => {
   try {
@@ -78,6 +82,11 @@ const MigrateModels = async () => {
           lock: true,
         }
       ),
+      MasterUOM.bulkCreate(MASTER_UOM, {
+        ignoreDuplicates: true,
+        transaction: trx,
+        lock: true,
+      }),
     ]);
 
     await trx.commit();
@@ -96,6 +105,7 @@ const MigrateModels = async () => {
 module.exports = () => {
   // initialize associations
   InitAssociations(
+    MasterUOM,
     MasterCategory,
     MasterFile,
     MasterStoreCatalogue,
@@ -115,6 +125,7 @@ module.exports = () => {
   // export the models here
   return {
     MigrateModels,
+    MasterUOM,
     MasterCategory,
     MasterFile,
     MasterStoreCatalogue,

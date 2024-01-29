@@ -1,4 +1,5 @@
 const InitAssociations = (
+  MasterUOM,
   MasterCategory,
   MasterFile,
   MasterStoreCatalogue,
@@ -116,6 +117,24 @@ const InitAssociations = (
   MasterCategory.hasMany(MasterStoreDisplayItem, {
     foreignKey: {
       name: "categoryId",
+      allowNull: false,
+    },
+    sourceKey: "id",
+    constraints: false,
+  });
+
+  // MASTER_STORE_DISPLAY_ITEM - MASTER_UOM //
+  MasterStoreDisplayItem.belongsTo(MasterUOM, {
+    foreignKey: {
+      name: "uomId",
+      allowNull: false,
+    },
+    targetKey: "id",
+    constraints: false,
+  });
+  MasterUOM.hasMany(MasterStoreDisplayItem, {
+    foreignKey: {
+      name: "uomId",
       allowNull: false,
     },
     sourceKey: "id",
