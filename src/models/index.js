@@ -58,11 +58,9 @@ const {
 const { MASTER_UOM } = require("../seeds/master_uom");
 
 const MigrateModels = async () => {
+  const trx = await db.transaction();
   try {
     await db.sync({ alter: true, force: false });
-
-    const trx = await db.transaction();
-
     await Promise.all([
       MasterCourier.bulkCreate(MASTER_COURIER_SEED, {
         ignoreDuplicates: true,

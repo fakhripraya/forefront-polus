@@ -48,7 +48,7 @@ const MasterStoreDisplayItem = db.define(
       type: DataTypes.DECIMAL,
     },
     productSKU: {
-      allowNull: false,
+      allowNull: true,
       type: DataTypes.STRING,
     },
     productStocks: {
@@ -58,10 +58,6 @@ const MasterStoreDisplayItem = db.define(
     productSafetyStocks: {
       allowNull: false,
       type: DataTypes.INTEGER,
-    },
-    productStockUOM: {
-      allowNull: false,
-      type: DataTypes.STRING,
     },
     productRating: {
       allowNull: false,
