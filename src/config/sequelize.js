@@ -24,6 +24,7 @@ const InitDBSequelize = () => {
       logging: console.log,
       omitNull: false,
       dialectOptions: {
+        decimalNumbers: true,
         ssl: DBSSLConnectionConfiguration(),
       },
       pool: {
