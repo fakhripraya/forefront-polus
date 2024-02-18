@@ -5,8 +5,8 @@ const {
   DB_DEFAULT_COLUMN_STATUS,
 } = require("../../variables/enum");
 
-const MasterStoreChannels = db.define(
-  "MasterStoreChannels",
+const MasterStoreRoles = db.define(
+  "MasterStoreRoles",
   {
     id: {
       primaryKey: true,
@@ -15,17 +15,9 @@ const MasterStoreChannels = db.define(
       type: DataTypes.UUID,
       defaultValue: UUIDV4,
     },
-    settingsJSON: {
+    roles: {
       allowNull: true,
-      type: DataTypes.JSON,
-    },
-    channelsOrder: {
-      allowNull: true,
-      type: DataTypes.INTEGER,
-    },
-    channelsJSON: {
-      allowNull: true,
-      type: DataTypes.JSON,
+      type: DataTypes.STRING,
     },
     status: {
       allowNull: false,
@@ -36,8 +28,8 @@ const MasterStoreChannels = db.define(
   {
     paranoid: true,
     deletedAt: "destroyTime",
-    tableName: "master_store_channels",
+    tableName: "master_store_roles",
   }
 );
 
-module.exports = { MasterStoreChannels };
+module.exports = { MasterStoreRoles };

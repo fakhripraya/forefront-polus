@@ -8,6 +8,7 @@ const {
 const {
   MASTER_PAYMENT_METHOD_SEED,
 } = require("../seeds/master_payment_method");
+const { MASTER_UOM } = require("../seeds/master_uom");
 const { SequelizeRollback } = require("../utils/functions");
 const { InitAssociations } = require("../associations");
 const {
@@ -35,8 +36,8 @@ const {
   MasterStoreChannels,
 } = require("../models/objects/master_stores_channels");
 const {
-  MasterStoreEmployees,
-} = require("../models/objects/master_stores_employees");
+  MasterStoreRoles,
+} = require("./objects/master_stores_roles");
 const {
   MasterStore,
 } = require("../models/objects/master_stores");
@@ -55,7 +56,10 @@ const {
 const {
   MasterPaymentMethod,
 } = require("./objects/master_payment_method");
-const { MASTER_UOM } = require("../seeds/master_uom");
+const { MasterAccess } = require("./user/master_access");
+const {
+  MasterStoreRolesAccesses,
+} = require("./objects/master_stores_roles_accesses");
 
 const MigrateModels = async () => {
   const trx = await db.transaction();
@@ -108,10 +112,12 @@ module.exports = () => {
     MasterFile,
     MasterStoreCatalogue,
     MasterStoreChannels,
-    MasterStoreEmployees,
+    MasterStoreRoles,
+    MasterStoreRolesAccesses,
     MasterStore,
     MasterUser,
     MasterUserBuyAddresses,
+    MasterAccess,
     MasterStoreDisplayItem,
     MasterTransaction,
     MasterTransactionDetail,
@@ -128,10 +134,12 @@ module.exports = () => {
     MasterFile,
     MasterStoreCatalogue,
     MasterStoreChannels,
-    MasterStoreEmployees,
+    MasterStoreRoles,
+    MasterStoreRolesAccesses,
     MasterStore,
     MasterUser,
     MasterUserBuyAddresses,
+    MasterAccess,
     MasterStoreDisplayItem,
     MasterTransaction,
     MasterTransactionDetail,

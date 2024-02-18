@@ -4,10 +4,12 @@ const InitAssociations = (
   MasterFile,
   MasterStoreCatalogue,
   MasterStoreChannels,
-  MasterStoreEmployees,
+  MasterStoreRoles,
+  MasterStoreRolesAccesses,
   MasterStore,
   MasterUser,
   MasterUserBuyAddresses,
+  MasterAccess,
   MasterStoreDisplayItem,
   MasterTransaction,
   MasterTransactionDetail,
@@ -33,8 +35,44 @@ const InitAssociations = (
     constraints: false,
   });
 
-  // MASTER_USER - MASTER_STORE_EMPLOYEES //
-  MasterStoreEmployees.belongsTo(MasterUser, {
+  // MASTER_ACCESS - MASTER_STORE_ROLES_ACCESSES //
+  MasterStoreRolesAccesses.belongsTo(MasterAccess, {
+    foreignKey: {
+      name: "accessId",
+      allowNull: false,
+    },
+    targetKey: "id",
+    constraints: false,
+  });
+  MasterAccess.hasMany(MasterStoreRolesAccesses, {
+    foreignKey: {
+      name: "accessId",
+      allowNull: false,
+    },
+    sourceKey: "id",
+    constraints: false,
+  });
+
+  // MASTER_STORE_ROLES - MASTER_STORE_ROLES_ACCESSES //
+  MasterStoreRolesAccesses.belongsTo(MasterStoreRoles, {
+    foreignKey: {
+      name: "storeRoleId",
+      allowNull: false,
+    },
+    targetKey: "id",
+    constraints: false,
+  });
+  MasterStoreRoles.hasMany(MasterStoreRolesAccesses, {
+    foreignKey: {
+      name: "storeRoleId",
+      allowNull: false,
+    },
+    sourceKey: "id",
+    constraints: false,
+  });
+
+  // MASTER_USER - MASTER_STORE_ROLES //
+  MasterStoreRoles.belongsTo(MasterUser, {
     foreignKey: {
       name: "userId",
       allowNull: false,
@@ -42,7 +80,7 @@ const InitAssociations = (
     targetKey: "id",
     constraints: false,
   });
-  MasterUser.hasMany(MasterStoreEmployees, {
+  MasterUser.hasMany(MasterStoreRoles, {
     foreignKey: {
       name: "userId",
       allowNull: false,
@@ -51,8 +89,8 @@ const InitAssociations = (
     constraints: false,
   });
 
-  // MASTER_STORE - MASTER_STORE_EMPLOYEES //
-  MasterStoreEmployees.belongsTo(MasterStore, {
+  // MASTER_STORE - MASTER_STORE_ROLES //
+  MasterStoreRoles.belongsTo(MasterStore, {
     foreignKey: {
       name: "storeId",
       allowNull: false,
@@ -60,7 +98,7 @@ const InitAssociations = (
     targetKey: "id",
     constraints: false,
   });
-  MasterStore.hasMany(MasterStoreEmployees, {
+  MasterStore.hasMany(MasterStoreRoles, {
     foreignKey: {
       name: "storeId",
       allowNull: false,
@@ -195,7 +233,6 @@ const InitAssociations = (
     constraints: false,
   });
 
-  //TODO: BARU
   // MASTER_USER - MASTER_USER_BUY_ADDRESSES //
   MasterUserBuyAddresses.belongsTo(MasterUser, {
     foreignKey: {
