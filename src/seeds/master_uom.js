@@ -1,6 +1,6 @@
 const { ACTIVE } = require("../variables/general");
 
-const MASTER_UOM = [
+const MASTER_UOM_SEED = [
   {
     uom: "Buah",
     status: ACTIVE,
@@ -32,5 +32,5 @@ const MASTER_UOM = [
 ];
 
 module.exports = {
-  MASTER_UOM,
+  MASTER_UOM_SEED,
 };

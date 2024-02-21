@@ -15,8 +15,8 @@ const MasterStoreRoles = db.define(
       type: DataTypes.UUID,
       defaultValue: UUIDV4,
     },
-    roles: {
-      allowNull: true,
+    roleName: {
+      allowNull: false,
       type: DataTypes.STRING,
     },
     status: {

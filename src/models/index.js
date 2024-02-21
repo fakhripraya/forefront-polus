@@ -8,7 +8,7 @@ const {
 const {
   MASTER_PAYMENT_METHOD_SEED,
 } = require("../seeds/master_payment_method");
-const { MASTER_UOM } = require("../seeds/master_uom");
+const { MASTER_UOM_SEED } = require("../seeds/master_uom");
 const { SequelizeRollback } = require("../utils/functions");
 const { InitAssociations } = require("../associations");
 const {
@@ -60,6 +60,18 @@ const { MasterAccess } = require("./user/master_access");
 const {
   MasterStoreRolesAccesses,
 } = require("./objects/master_stores_roles_accesses");
+const {
+  MasterStoreUserRoles,
+} = require("./objects/master_stores_user_roles");
+const {
+  MASTER_ACCESS_SEED,
+} = require("../seeds/master_access");
+const {
+  MasterStoreChannelsPermissions,
+} = require("./objects/master_stores_channels_permissions");
+const {
+  MasterStoresPermissions,
+} = require("./objects/master_stores_permissions");
 
 const MigrateModels = async () => {
   const trx = await db.transaction();
@@ -84,7 +96,12 @@ const MigrateModels = async () => {
           lock: true,
         }
       ),
-      MasterUOM.bulkCreate(MASTER_UOM, {
+      MasterUOM.bulkCreate(MASTER_UOM_SEED, {
+        ignoreDuplicates: true,
+        transaction: trx,
+        lock: true,
+      }),
+      MasterAccess.bulkCreate(MASTER_ACCESS_SEED, {
         ignoreDuplicates: true,
         transaction: trx,
         lock: true,
@@ -112,9 +129,12 @@ module.exports = () => {
     MasterFile,
     MasterStoreCatalogue,
     MasterStoreChannels,
+    MasterStoreChannelsPermissions,
     MasterStoreRoles,
     MasterStoreRolesAccesses,
+    MasterStoreUserRoles,
     MasterStore,
+    MasterStoresPermissions,
     MasterUser,
     MasterUserBuyAddresses,
     MasterAccess,
@@ -134,9 +154,12 @@ module.exports = () => {
     MasterFile,
     MasterStoreCatalogue,
     MasterStoreChannels,
+    MasterStoreChannelsPermissions,
     MasterStoreRoles,
     MasterStoreRolesAccesses,
+    MasterStoreUserRoles,
     MasterStore,
+    MasterStoresPermissions,
     MasterUser,
     MasterUserBuyAddresses,
     MasterAccess,

@@ -1,16 +1,12 @@
 const { DataTypes, UUIDV4 } = require("sequelize");
 const { db } = require("../../config");
-const {
-  ACTIVE,
-  GENERAL_ACCESS,
-} = require("../../variables/general");
+const { ACTIVE } = require("../../variables/general");
 const {
   DB_DEFAULT_COLUMN_STATUS,
-  DB_ACCESS_TYPE,
 } = require("../../variables/enum");
 
-const MasterAccess = db.define(
-  "MasterAccess",
+const MasterStoresPermissions = db.define(
+  "MasterStoresPermissions",
   {
     id: {
       primaryKey: true,
@@ -19,14 +15,9 @@ const MasterAccess = db.define(
       type: DataTypes.UUID,
       defaultValue: UUIDV4,
     },
-    accessType: {
-      allowNull: false,
-      type: DataTypes.ENUM(DB_ACCESS_TYPE),
-      defaultValue: GENERAL_ACCESS,
-    },
-    accessName: {
-      allowNull: false,
-      type: DataTypes.STRING,
+    permitted: {
+      allowNull: true,
+      type: DataTypes.BOOLEAN,
     },
     status: {
       allowNull: false,
@@ -35,11 +26,10 @@ const MasterAccess = db.define(
     },
   },
   {
-    indexes: [{ unique: true, fields: ["accessName"] }],
     paranoid: true,
     deletedAt: "destroyTime",
-    tableName: "master_access",
+    tableName: "master_store_permissions",
   }
 );
 
-module.exports = { MasterAccess };
+module.exports = { MasterStoresPermissions };

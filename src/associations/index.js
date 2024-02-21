@@ -4,9 +4,12 @@ const InitAssociations = (
   MasterFile,
   MasterStoreCatalogue,
   MasterStoreChannels,
+  MasterStoreChannelsPermissions,
   MasterStoreRoles,
   MasterStoreRolesAccesses,
+  MasterStoreUserRoles,
   MasterStore,
+  MasterStoresPermissions,
   MasterUser,
   MasterUserBuyAddresses,
   MasterAccess,
@@ -72,7 +75,25 @@ const InitAssociations = (
   });
 
   // MASTER_USER - MASTER_STORE_ROLES //
-  MasterStoreRoles.belongsTo(MasterUser, {
+  MasterStoreUserRoles.belongsTo(MasterStoreRoles, {
+    foreignKey: {
+      name: "storeRoleId",
+      allowNull: false,
+    },
+    targetKey: "id",
+    constraints: false,
+  });
+  MasterStoreRoles.hasMany(MasterStoreUserRoles, {
+    foreignKey: {
+      name: "storeRoleId",
+      allowNull: false,
+    },
+    sourceKey: "id",
+    constraints: false,
+  });
+
+  // MASTER_USER - MASTER_STORE_USER_ROLES //
+  MasterStoreUserRoles.belongsTo(MasterUser, {
     foreignKey: {
       name: "userId",
       allowNull: false,
@@ -80,7 +101,7 @@ const InitAssociations = (
     targetKey: "id",
     constraints: false,
   });
-  MasterUser.hasMany(MasterStoreRoles, {
+  MasterUser.hasMany(MasterStoreUserRoles, {
     foreignKey: {
       name: "userId",
       allowNull: false,
@@ -101,6 +122,42 @@ const InitAssociations = (
   MasterStore.hasMany(MasterStoreRoles, {
     foreignKey: {
       name: "storeId",
+      allowNull: false,
+    },
+    sourceKey: "id",
+    constraints: false,
+  });
+
+  // MASTER_STORE_PERMISSIONS - MASTER_STORE//
+  MasterStoresPermissions.belongsTo(MasterStore, {
+    foreignKey: {
+      name: "storeId",
+      allowNull: false,
+    },
+    targetKey: "id",
+    constraints: false,
+  });
+  MasterStore.hasMany(MasterStoresPermissions, {
+    foreignKey: {
+      name: "storeId",
+      allowNull: false,
+    },
+    sourceKey: "id",
+    constraints: false,
+  });
+
+  // MASTER_STORE_PERMISSIONS - MASTER_ACCESS //
+  MasterStoresPermissions.belongsTo(MasterAccess, {
+    foreignKey: {
+      name: "accessId",
+      allowNull: false,
+    },
+    targetKey: "id",
+    constraints: false,
+  });
+  MasterAccess.hasMany(MasterStoresPermissions, {
+    foreignKey: {
+      name: "accessId",
       allowNull: false,
     },
     sourceKey: "id",
@@ -227,6 +284,69 @@ const InitAssociations = (
   MasterStore.hasMany(MasterStoreChannels, {
     foreignKey: {
       name: "storeId",
+      allowNull: false,
+    },
+    sourceKey: "id",
+    constraints: false,
+  });
+
+  // MASTER_STORE_CHANNELS_PERMISSIONS - MASTER_STORE_CHANNELS //
+  MasterStoreChannelsPermissions.belongsTo(
+    MasterStoreChannels,
+    {
+      foreignKey: {
+        name: "channelId",
+        allowNull: false,
+      },
+      targetKey: "id",
+      constraints: false,
+    }
+  );
+  MasterStoreChannels.hasMany(
+    MasterStoreChannelsPermissions,
+    {
+      foreignKey: {
+        name: "channelId",
+        allowNull: false,
+      },
+      sourceKey: "id",
+      constraints: false,
+    }
+  );
+
+  // MASTER_STORE_ROLES - MASTER_STORE_CHANNELS_PERMISSIONS //
+  MasterStoreChannelsPermissions.belongsTo(
+    MasterStoreRoles,
+    {
+      foreignKey: {
+        name: "storeRoleId",
+        allowNull: false,
+      },
+      targetKey: "id",
+      constraints: false,
+    }
+  );
+  MasterStoreRoles.hasMany(MasterStoreChannelsPermissions, {
+    foreignKey: {
+      name: "storeRoleId",
+      allowNull: false,
+    },
+    sourceKey: "id",
+    constraints: false,
+  });
+
+  // MASTER_ACCESS - MASTER_STORE_CHANNELS_PERMISSIONS //
+  MasterStoreChannelsPermissions.belongsTo(MasterAccess, {
+    foreignKey: {
+      name: "accessId",
+      allowNull: false,
+    },
+    targetKey: "id",
+    constraints: false,
+  });
+  MasterAccess.hasMany(MasterStoreChannelsPermissions, {
+    foreignKey: {
+      name: "accessId",
       allowNull: false,
     },
     sourceKey: "id",
