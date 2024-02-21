@@ -20,24 +20,6 @@ const InitAssociations = (
   MasterCourier,
   MasterPaymentMethod
 ) => {
-  // MASTER_USER - MASTER_STORE //
-  MasterStore.belongsTo(MasterUser, {
-    foreignKey: {
-      name: "userId",
-      allowNull: false,
-    },
-    targetKey: "id",
-    constraints: false,
-  });
-  MasterUser.hasMany(MasterStore, {
-    foreignKey: {
-      name: "userId",
-      allowNull: false,
-    },
-    sourceKey: "id",
-    constraints: false,
-  });
-
   // MASTER_ACCESS - MASTER_STORE_ROLES_ACCESSES //
   MasterStoreRolesAccesses.belongsTo(MasterAccess, {
     foreignKey: {
