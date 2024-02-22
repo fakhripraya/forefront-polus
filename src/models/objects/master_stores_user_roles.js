@@ -22,6 +22,12 @@ const MasterStoreUserRoles = db.define(
     },
   },
   {
+    indexes: [
+      {
+        unique: true,
+        fields: ["userId", "storeRoleId"],
+      },
+    ],
     paranoid: true,
     deletedAt: "destroyTime",
     tableName: "master_store_user_roles",
