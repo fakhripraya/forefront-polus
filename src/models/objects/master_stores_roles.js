@@ -19,6 +19,22 @@ const MasterStoreRoles = db.define(
       allowNull: false,
       type: DataTypes.STRING,
     },
+    isAll: {
+      allowNull: false,
+      type: DataTypes.BOOLEAN,
+    },
+    isMutable: {
+      allowNull: false,
+      type: DataTypes.BOOLEAN,
+    },
+    isAssignable: {
+      allowNull: false,
+      type: DataTypes.BOOLEAN,
+    },
+    isDestroyable: {
+      allowNull: false,
+      type: DataTypes.BOOLEAN,
+    },
     status: {
       allowNull: false,
       type: DataTypes.ENUM(DB_DEFAULT_COLUMN_STATUS),
