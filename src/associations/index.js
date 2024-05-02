@@ -9,7 +9,6 @@ const InitAssociations = (
   MasterStoreRolesAccesses,
   MasterStoreUserRoles,
   MasterStore,
-  MasterStoresPermissions,
   MasterUser,
   MasterUserBuyAddresses,
   MasterAccess,
@@ -104,42 +103,6 @@ const InitAssociations = (
   MasterStore.hasMany(MasterStoreRoles, {
     foreignKey: {
       name: "storeId",
-      allowNull: false,
-    },
-    sourceKey: "id",
-    constraints: false,
-  });
-
-  // MASTER_STORE_PERMISSIONS - MASTER_STORE//
-  MasterStoresPermissions.belongsTo(MasterStore, {
-    foreignKey: {
-      name: "storeId",
-      allowNull: false,
-    },
-    targetKey: "id",
-    constraints: false,
-  });
-  MasterStore.hasMany(MasterStoresPermissions, {
-    foreignKey: {
-      name: "storeId",
-      allowNull: false,
-    },
-    sourceKey: "id",
-    constraints: false,
-  });
-
-  // MASTER_STORE_PERMISSIONS - MASTER_ACCESS //
-  MasterStoresPermissions.belongsTo(MasterAccess, {
-    foreignKey: {
-      name: "accessId",
-      allowNull: false,
-    },
-    targetKey: "id",
-    constraints: false,
-  });
-  MasterAccess.hasMany(MasterStoresPermissions, {
-    foreignKey: {
-      name: "accessId",
       allowNull: false,
     },
     sourceKey: "id",

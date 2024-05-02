@@ -69,9 +69,6 @@ const {
 const {
   MasterStoreChannelsPermissions,
 } = require("./objects/master_stores_channels_permissions");
-const {
-  MasterStoresPermissions,
-} = require("./objects/master_stores_permissions");
 
 const MigrateModels = async () => {
   const trx = await db.transaction();
@@ -134,7 +131,6 @@ module.exports = () => {
     MasterStoreRolesAccesses,
     MasterStoreUserRoles,
     MasterStore,
-    MasterStoresPermissions,
     MasterUser,
     MasterUserBuyAddresses,
     MasterAccess,
@@ -159,7 +155,6 @@ module.exports = () => {
     MasterStoreRolesAccesses,
     MasterStoreUserRoles,
     MasterStore,
-    MasterStoresPermissions,
     MasterUser,
     MasterUserBuyAddresses,
     MasterAccess,
