@@ -1,6 +1,6 @@
 {
   "name": "forefront-polus",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "the titan of knowledge",
   "main": "index.js",
   "scripts": {
