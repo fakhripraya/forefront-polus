@@ -19,10 +19,6 @@ const MasterStoreRoles = db.define(
       allowNull: false,
       type: DataTypes.STRING,
     },
-    isAll: {
-      allowNull: false,
-      type: DataTypes.BOOLEAN,
-    },
     isMutable: {
       allowNull: false,
       type: DataTypes.BOOLEAN,
