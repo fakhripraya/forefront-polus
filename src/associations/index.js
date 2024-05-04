@@ -55,7 +55,7 @@ const InitAssociations = (
     constraints: false,
   });
 
-  // MASTER_USER - MASTER_STORE_ROLES //
+  // MASTER_STORE_USER_ROLES - MASTER_STORE_ROLES //
   MasterStoreUserRoles.belongsTo(MasterStoreRoles, {
     foreignKey: {
       name: "storeRoleId",
