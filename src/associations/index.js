@@ -17,7 +17,8 @@ const InitAssociations = (
   MasterTransactionDetail,
   MasterActivityReport,
   MasterCourier,
-  MasterPaymentMethod
+  MasterPaymentMethod,
+  MasterStoreMembers
 ) => {
   // MASTER_ACCESS - MASTER_STORE_ROLES_ACCESSES //
   MasterStoreRolesAccesses.belongsTo(MasterAccess, {
@@ -421,6 +422,42 @@ const InitAssociations = (
   MasterPaymentMethod.hasMany(MasterTransaction, {
     foreignKey: {
       name: "paymentMethodId",
+      allowNull: false,
+    },
+    sourceKey: "id",
+    constraints: false,
+  });
+
+  // MASTER_STORE - MASTER_STORE_MEMBERS //
+  MasterStoreMembers.belongsTo(MasterStore, {
+    foreignKey: {
+      name: "storeId",
+      allowNull: false,
+    },
+    targetKey: "id",
+    constraints: false,
+  });
+  MasterStore.hasMany(MasterStoreMembers, {
+    foreignKey: {
+      name: "storeId",
+      allowNull: false,
+    },
+    sourceKey: "id",
+    constraints: false,
+  });
+
+  // MASTER_USER - MASTER_STORE_MEMBERS //
+  MasterStoreMembers.belongsTo(MasterUser, {
+    foreignKey: {
+      name: "userId",
+      allowNull: false,
+    },
+    targetKey: "id",
+    constraints: false,
+  });
+  MasterUser.hasMany(MasterStoreMembers, {
+    foreignKey: {
+      name: "userId",
       allowNull: false,
     },
     sourceKey: "id",

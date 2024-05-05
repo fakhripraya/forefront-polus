@@ -28,6 +28,10 @@ const MasterAccess = db.define(
       allowNull: false,
       type: DataTypes.STRING,
     },
+    accessDescription: {
+      allowNull: false,
+      type: DataTypes.TEXT,
+    },
     status: {
       allowNull: false,
       type: DataTypes.ENUM(DB_DEFAULT_COLUMN_STATUS),

@@ -19,6 +19,14 @@ const MasterStoreRoles = db.define(
       allowNull: false,
       type: DataTypes.STRING,
     },
+    roleColorHex: {
+      allowNull: false,
+      type: DataTypes.STRING,
+    },
+    addOnConsentScreen: {
+      allowNull: false,
+      type: DataTypes.BOOLEAN,
+    },
     isMutable: {
       allowNull: false,
       type: DataTypes.BOOLEAN,

@@ -69,6 +69,9 @@ const {
 const {
   MasterStoreChannelsPermissions,
 } = require("./objects/master_stores_channels_permissions");
+const {
+  MasterStoreMembers,
+} = require("./objects/master_stores_members");
 
 const MigrateModels = async () => {
   const trx = await db.transaction();
@@ -139,7 +142,8 @@ module.exports = () => {
     MasterTransactionDetail,
     MasterActivityReport,
     MasterCourier,
-    MasterPaymentMethod
+    MasterPaymentMethod,
+    MasterStoreMembers
   );
 
   // export the models here
@@ -164,5 +168,6 @@ module.exports = () => {
     MasterActivityReport,
     MasterCourier,
     MasterPaymentMethod,
+    MasterStoreMembers,
   };
 };

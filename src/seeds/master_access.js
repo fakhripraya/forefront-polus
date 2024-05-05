@@ -81,11 +81,15 @@ const MASTER_ACCESS_SEED = [
   {
     accessType: CREATIVE_STORE_ACCESS,
     accessName: VIEW_CHANNEL,
+    accessDescription:
+      "Allows members to view channels by default (excluding private channels).",
     status: ACTIVE,
   },
   {
     accessType: CREATIVE_STORE_ACCESS,
     accessName: SEND_MESSAGES,
+    accessDescription:
+      "Allows members to send messages in text channels.",
     status: ACTIVE,
   },
 ];
