@@ -31,7 +31,7 @@ const MasterStoreRoles = db.define(
       allowNull: false,
       type: DataTypes.BOOLEAN,
     },
-    isAssignable: {
+    isEveryone: {
       allowNull: false,
       type: DataTypes.BOOLEAN,
     },
