@@ -1,8 +1,12 @@
 const { DataTypes, UUIDV4 } = require("sequelize");
 const { db } = require("../../config");
-const { ACTIVE } = require("../../variables/general");
+const {
+  ACTIVE,
+  FREE_TIER,
+} = require("../../variables/general");
 const {
   DB_DEFAULT_COLUMN_STATUS,
+  DB_CREATIVE_STORE_MEMBERSHIP_STATUS,
 } = require("../../variables/enum");
 
 const MasterStoreMembers = db.define(
@@ -15,6 +19,17 @@ const MasterStoreMembers = db.define(
       type: DataTypes.UUID,
       defaultValue: UUIDV4,
     },
+    membershipConfig: {
+      allowNull: true,
+      type: DataTypes.JSON,
+    },
+    membershipStatus: {
+      allowNull: false,
+      type: DataTypes.ENUM(
+        DB_CREATIVE_STORE_MEMBERSHIP_STATUS
+      ),
+      defaultValue: FREE_TIER,
+    },
     status: {
       allowNull: false,
       type: DataTypes.ENUM(DB_DEFAULT_COLUMN_STATUS),
@@ -22,12 +37,6 @@ const MasterStoreMembers = db.define(
     },
   },
   {
-    indexes: [
-      {
-        unique: true,
-        fields: ["userId"],
-      },
-    ],
     paranoid: true,
     deletedAt: "destroyTime",
     tableName: "master_store_members",
